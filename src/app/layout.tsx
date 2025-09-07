@@ -26,7 +26,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Crochet by [BrandName]",
+  title: "Stace YarnArt 🧶",
   description: "Handmade crochet tops, underwear, and unique wearable art.",
 };
 
