@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Nabar";
 import Cart from "@/components/sections/home/Cart";
 import { ToastProvider } from "@/components/ui/toast";
+import { Analytics } from "@vercel/analytics/next"
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -17,13 +18,6 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-body",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-body",
-  weight: "100",
 });
 
 export const metadata: Metadata = {
@@ -52,6 +46,7 @@ export default function RootLayout({
           </ToastProvider>
         </CartProvider>
       </body>
+      <Analytics />
     </html>
   );
 }
