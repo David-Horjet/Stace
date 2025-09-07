@@ -64,7 +64,7 @@ const Navbar = () => {
             >
               <ShoppingBag className="w-5 h-5" />
               {getItemCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-dusty-rose to-terracotta text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-900 from-dusty-rose to-terracotta text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center">
                   {getItemCount()}
                 </span>
               )}

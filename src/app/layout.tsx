@@ -5,6 +5,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Nabar";
 import Cart from "@/components/sections/home/Cart";
+import { ToastProvider } from "@/components/ui/toast";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -41,12 +42,14 @@ export default function RootLayout({
         className={`${playfairDisplay.variable} ${dmSans.variable} antialiased bg-white text-gray-900`}
       >
         <CartProvider>
-          <div className="min-h-screen">
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </div>
-          <Cart />
+          <ToastProvider>
+            <div className="min-h-screen">
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+            </div>
+            <Cart />
+          </ToastProvider>
         </CartProvider>
       </body>
     </html>
