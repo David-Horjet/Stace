@@ -1,26 +1,256 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+/* --- Design tokens (kept numeric values so we can use `hsl(var(--...))` where needed) --- */
+:root{
+  /* Core Brand Colors - Warm & Soft (use numeric HSL tokens) */
+  --background: 30 20% 98%;
+  --foreground: 25 15% 15%;
+
+  /* Card & Surface Colors */
+  --card: 28 25% 97%;
+  --card-foreground: 25 15% 15%;
+
+  /* Interactive Elements */
+  --popover: 28 25% 97%;
+  --popover-foreground: 25 15% 15%;
+
+  /* Primary Brand - Dusty Rose */
+  --primary: 15 25% 75%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Warm Cream */
+  --secondary: 35 30% 94%;
+  --secondary-foreground: 25 15% 20%;
+
+  /* Muted Elements */
+  --muted: 30 20% 90%;
+  --muted-foreground: 25 10% 45%;
+
+  /* Accent - Terracotta */
+  --accent: 25 35% 75%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Status Colors */
+  --destructive: 0 65% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Borders & Inputs */
+  --border: 30 20% 88%;
+  --input: 30 20% 92%;
+  --ring: 15 25% 75%;
+
+  /* Brand Specific Tokens */
+  --beige: 35 25% 92%;
+  --soft-pink: 15 30% 88%;
+  --dusty-rose: 15 25% 75%;
+  --terracotta: 25 35% 75%;
+  --cream: 45 35% 96%;
+
+  /* Gradients (use hsl(var(--...)) below) */
+  --gradient-hero: linear-gradient(135deg, hsl(var(--warm-beige)), hsl(var(--soft-pink)));
+  --soft: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--beige)));
+  --gradient-accent: linear-gradient(45deg, hsl(var(--dusty-rose)), hsl(var(--terracotta)));
+
+  /* Shadows (alpha uses `hsl(var(--...)/alpha)` - keeps numeric tokens) */
+  --shadow-soft: 0 4px 20px -4px hsl(var(--dusty-rose) / 0.1);
+  --shadow-elegant: 0 8px 30px -8px hsl(var(--dusty-rose) / 0.15);
+  --shadow-floating: 0 12px 40px -12px hsl(var(--dusty-rose) / 0.2);
+
+  /* Typography */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Poppins', sans-serif;
+
+  /* Animations / Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  --radius: 0.75rem;
+
+  /* Sidebar tokens from old file */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
+/* --- Dark mode overrides (kept the old file values) --- */
+.dark{
+  --background: 25 15% 8%;
+  --foreground: 30 20% 95%;
+
+  --card: 25 15% 10%;
+  --card-foreground: 30 20% 95%;
+
+  --popover: 25 15% 10%;
+  --popover-foreground: 30 20% 95%;
+
+  --primary: 15 30% 80%;
+  --primary-foreground: 25 15% 10%;
+
+  --secondary: 25 10% 15%;
+  --secondary-foreground: 30 20% 90%;
+
+  --muted: 25 10% 18%;
+  --muted-foreground: 30 10% 65%;
+
+  --accent: 25 30% 70%;
+  --accent-foreground: 25 15% 10%;
+
+  --destructive: 0 65% 65%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 25 10% 20%;
+  --input: 25 10% 18%;
+  --ring: 15 30% 80%;
+
+  --warm-beige: 25 15% 12%;
+  --soft-pink: 15 20% 18%;
+  --dusty-rose: 15 30% 80%;
+  --terracotta: 25 30% 75%;
+  --cream: 30 15% 10%;
+
+  --gradient-hero: linear-gradient(135deg, hsl(var(--warm-beige)), hsl(var(--soft-pink)));
+  --gradient-soft: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--warm-beige)));
+  --gradient-accent: linear-gradient(45deg, hsl(var(--dusty-rose)), hsl(var(--terracotta)));
+
+  --sidebar-background: 25 15% 8%;
+  --sidebar-foreground: 30 20% 90%;
+  --sidebar-primary: 15 30% 80%;
+  --sidebar-primary-foreground: 25 15% 10%;
+  --sidebar-accent: 25 10% 15%;
+  --sidebar-accent-foreground: 30 20% 90%;
+  --sidebar-border: 25 10% 18%;
+  --sidebar-ring: 15 30% 80%;
+}
+
+/* --- Map tokens into theme variables for Tailwind (new @theme inline approach) --- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* fonts */
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+
+  /* core colors (wrap numeric tokens with hsl(...)) */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* sidebar theme tokens */
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  /* radii */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* shadows */
+  --shadow-soft: var(--shadow-soft);
+  --shadow-elegant: var(--shadow-elegant);
+  --shadow-floating: var(--shadow-floating);
+
+  /* transitions - kept as variables for custom classes if needed */
+  --transition-smooth: var(--transition-smooth);
+  --transition-gentle: var(--transition-gentle);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* --- Base utilities and animations --- */
+@layer base {
+  /* apply border color token (requires your tailwind config to map border-border to var(--color-border)) */
+  * {
+    @apply border-border;
   }
+
+  /* root body styles (tailwind classes will use theme inline tokens) */
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Animations */
+  .hero-float {
+    animation: heroFloat 6s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .stagger-delay-1 { animation-delay: 0.1s; }
+  .stagger-delay-2 { animation-delay: 0.2s; }
+  .stagger-delay-3 { animation-delay: 0.3s; }
+  .stagger-delay-4 { animation-delay: 0.4s; }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+
+  /* Custom scrollbar (keeps your aesthetic) */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--dusty-rose)); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--terracotta)); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Component helpers (from old file) --- */
+@layer components {
+  .gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: hsl(var(--card) / 0.8);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  /* small helper for subtle card elevation using your shadow token */
+  .elevated {
+    box-shadow: var(--shadow-elegant);
+    border-radius: var(--radius);
+  }
 }
